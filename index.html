@@ -27,23 +27,22 @@
         .profile-pic {
             width: 120px; 
             height: 120px; 
-            border-radius: 50%; /* Circular image */
-            background-color: #fffd75; /* Yellow placeholder background */
-            margin: 0 auto 20px auto; /* Space below the image */
+            border-radius: 50%;
+            background-color: #fffd75; 
+            margin: 0 auto 20px auto;
             display: block;
-            object-fit: cover; /* Ensures the image fits cleanly */
+            object-fit: cover;
         }
 
         /* Header Styling */
         .header {
             font-size: 2.5rem;
             font-weight: bold;
-            color: #111;
         }
 
         /* Highlighted Number */
         .highlight {
-            background-color: #fffd75; /* Yellow highlight */
+            background-color: #fffd75;
             padding: 0.2rem 0.5rem;
             font-weight: bold;
             font-size: 2.5rem;
@@ -66,14 +65,14 @@
         }
 
         .social-links a img {
-            width: 40px; /* Logo size */
+            width: 40px;
             height: 40px;
             object-fit: contain;
             transition: transform 0.2s ease-in-out;
         }
 
         .social-links a img:hover {
-            transform: scale(1.1); /* Slight zoom on hover */
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -84,19 +83,17 @@
         
         <!-- Header -->
         <div class="header">
-            Kyle's Job Search Day <span class="highlight" id="days">0</span>
+            Kyle's Job Search Day <span class="highlight" id="number">0</span>
         </div>
 
         <!-- Decimal Counter -->
-        <div class="decimal-text" id="live-counter">0.000000</div>
+        <div class="decimal-text" id="decimals">0.000000</div>
 
         <!-- Social Links -->
         <div class="social-links">
-            <!-- Linktree -->
             <a href="https://linktr.ee/kyleprodrigo" target="_blank">
                 <img src="linktree-logo.webp" alt="Linktree Logo">
             </a>
-            <!-- LinkedIn -->
             <a href="https://www.linkedin.com/in/kyle-rodrigo-1940761b3" target="_blank">
                 <img src="linkedin-logo.webp" alt="LinkedIn Logo">
             </a>
@@ -107,24 +104,23 @@
         const startDate = new Date("2024-10-22T14:05:00");
 
         function calculateDays() {
-            const today = new Date();
-            const differenceInTime = today - startDate;
-            return Math.max(Math.floor(differenceInTime / (1000 * 60 * 60 * 24)), 0);
+            let date2 = new Date();
+            let timeDifference = date2.getTime() - startDate.getTime();
+            let days = timeDifference / (1000 * 3600 * 24);
+
+            // Update Days and Decimals
+            document.getElementById("number").textContent = Math.floor(days);
+            document.getElementById("decimals").textContent = days.toFixed(6);
+
+            // Update Title
+            document.title = "Day " + Math.floor(days) + " | Kyle's Counter";
+
+            return Math.floor(days);
         }
 
-        function calculateLiveCounter() {
-            const now = new Date();
-            const differenceInTime = now - startDate;
-            return Math.max((differenceInTime / (1000 * 60 * 60 * 24)).toFixed(6), "0.000000");
-        }
-
-        function updateCounters() {
-            document.getElementById("days").textContent = calculateDays();
-            document.getElementById("live-counter").textContent = calculateLiveCounter();
-        }
-
-        setInterval(updateCounters, 100);
-        updateCounters();
+        // Update counters every second
+        window.setInterval(calculateDays, 1000);
+        calculateDays();
     </script>
 </body>
 </html>
